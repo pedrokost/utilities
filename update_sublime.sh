@@ -1,0 +1,1 @@
+../../dev/tools/update_sublime.sh
