@@ -1,4 +1,4 @@
 [submodule "fasd"]
-	path = fasd
-	url = https://github.com/clvv/fasd.git
+  path = fasd
+  url = https://github.com/clvv/fasd.git
   ignore = dirty
