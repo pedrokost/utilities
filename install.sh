@@ -6,11 +6,6 @@ echo "initializing submodules"
 git submodule init
 git submodule update
 
-echo "Setting up FASD - a command-line productivity booster"
-cd fasd
-make install
-cd ..
-
 # IMG2PDF
 rm /usr/local/bin/img2pdf
 ln -s $scriptdir/img2pdf.py /usr/local/bin/img2pdf
