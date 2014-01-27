@@ -52,6 +52,10 @@ then
 	chmod u+x img2pdf.py
 fi
 
+# wget https://bitbucket.org/Skin36/gerix-wifi-cracker-pyqt4/downloads/gerix-wifi-cracker-master.rar
+# unrar x gerix-wifi-cracker-master.rar
+# rm gerix-wifi-cracker-master.rar
+
 
 if ! [ "$(exists ytdlmp3)" -eq 1 ]
 then
@@ -60,4 +64,7 @@ then
 	chmod u+x youtube-dl
 	alias ytdlmp3='ytdl --extract-audio --audio-format "mp3"' #FIXME
 fi
+
+echo "Installing trash-cli" 
+sudo apt-get install trash-cli
 
