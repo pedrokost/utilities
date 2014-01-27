@@ -28,22 +28,13 @@ then
 	cd ..
 fi
 
-if ! [ "$(exists rm)" -eq 1 ]
+if ! [ "$(exists calibre)" -eq 1 ]
 then
 	echo "Installing Calibre"
 	sudo python -c "import sys; py3 = sys.version_info[0] > 2; u = __import__('urllib.request' if py3 else 'urllib', fromlist=1); exec(u.urlopen('http://status.calibre-ebook.com/linux_installer').read()); main()"
 fi
 
 # IMG2PDF
-if ! [ "$(exists img2pdf)" -eq 1 ]
-then
-	rm /usr/local/bin/img2pdf
-	ln -s $scriptdir/img2pdf.py /usr/local/bin/img2pdf
-	chmod u+x img2pdf.py
-fi
-
-
-# YOUTUBE DOWNLOADER
 
 if ! [ "$(exists img2pdf)" -eq 1 ]
 then
@@ -56,6 +47,7 @@ fi
 # unrar x gerix-wifi-cracker-master.rar
 # rm gerix-wifi-cracker-master.rar
 
+# YOUTUBE DOWNLOADER
 
 if ! [ "$(exists ytdlmp3)" -eq 1 ]
 then
@@ -65,6 +57,8 @@ then
 	alias ytdlmp3='ytdl --extract-audio --audio-format "mp3"' #FIXME
 fi
 
-echo "Installing trash-cli" 
-sudo apt-get install trash-cli
-
+if ! [ "$(exists trash-put)" -eq 1 ]
+then
+	echo "Installing trash-cli" 
+	sudo apt-get install trash-cli
+fi
