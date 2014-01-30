@@ -2,6 +2,10 @@
 
 scriptdir="`pwd`"
 
+cd
+homedir="`pwd`"
+cd "$scriptdir"
+
 function exists() {
 	if command -v "$1" >/dev/null 2>&1;
 	then
@@ -61,4 +65,17 @@ if ! [ "$(exists trash-put)" -eq 1 ]
 then
 	echo "Installing trash-cli" 
 	sudo apt-get install trash-cli
+fi
+
+if [ -d "$homedir/.natim-tomate" ]; then
+	echo "Updating tomate"
+	cd ~/.natim-tomate
+	git pull
+	unlink /usr/local/bin/tomate
+	ln -s "$homedir/.natim-tomate/tomate.py" /usr/local/bin/tomate
+	cd $scriptdir
+else
+	echo "Installing tomate"
+	git clone https://git.gitorious.org/~natim/tomate/natim-tomate.git "$homedir/.natim-tomate"
+	ln -s "$homedir/.natim-tomate/tomate.py" /usr/local/bin/tomate
 fi
