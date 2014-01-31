@@ -3,3 +3,4 @@ ppa:webupd8team/sublime-text-3      # Sublime text 3 beta
 
 
 
+ppa:me-davidsansome/clementine-dev      # Clementine music player

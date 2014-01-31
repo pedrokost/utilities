@@ -7,3 +7,4 @@ trash-cli                  # replacement for rm, which puts stuff in the trash
 sublime-text-installer     # sublime text 3 installer
 
 
+clementine        # clementine music player
