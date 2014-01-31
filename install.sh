@@ -32,21 +32,23 @@ do
     		printf "%s\n" "ok"
     	fi
 	fi
-done < packages.txt 
+done < packages.txt
 
-# for each row in packages
-# split by #, split by ,
-
-echo "initializing submodules"
-git submodule init
-git submodule update
+if ! [ -d "$homedir/.oh-my-zsh" ]; then
+	echo "Downloading and installing oh-my-zsh"
+	wget --quiet --no-check-certificate https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | sh
+fi
 
 if ! [ "$(exists fasd)" -eq 1 ]
 then
+	echo "Downloading fasd"
+	git clone --quiet https://github.com/clvv/fasd.git
+
 	echo "Setting up FASD - a command-line productivity booster"
 	cd fasd
-	make install
+	make install --quiet
 	cd ..
+	rm -r fasd/
 fi
 
 if ! [ "$(exists calibre)" -eq 1 ]
@@ -78,12 +80,6 @@ then
 	alias ytdlmp3='ytdl --extract-audio --audio-format "mp3"' #FIXME
 fi
 
-if ! [ "$(exists trash-put)" -eq 1 ]
-then
-	echo "Installing trash-cli" 
-	sudo apt-get install trash-cli
-fi
-
 if [ -d "$homedir/.natim-tomate" ]; then
 	echo "Updating tomate"
 	cd ~/.natim-tomate
@@ -96,3 +92,4 @@ else
 	git clone https://git.gitorious.org/~natim/tomate/natim-tomate.git "$homedir/.natim-tomate"
 	ln -s "$homedir/.natim-tomate/tomate.py" /usr/local/bin/tomate
 fi
+
