@@ -15,10 +15,27 @@ function exists() {
 	fi
 }
 
-# if [ "$(exists rm)" -eq 1 ]
-# then
+echo "Installing packages"
+while read line           
+do
+	if ! [[ $line == \#* ]]; then  # if not comment line
+		#statements
+		package=(${line//\#/ })
+		# echo "Installing $package"
+		status=`dpkg-query -W -f='${Status}' ${package[0]} 2>/dev/null`
 
-# fi
+    	printf "%-20s " "$package"
+    	if ! [[ $status == "install ok installed" ]]; then
+    		`sudo apt-get install -qq -y $package 1>/dev/null`
+    		printf "%s\n" "installed"
+    	else
+    		printf "%s\n" "ok"
+    	fi
+	fi
+done < packages.txt 
+
+# for each row in packages
+# split by #, split by ,
 
 echo "initializing submodules"
 git submodule init
@@ -70,7 +87,7 @@ fi
 if [ -d "$homedir/.natim-tomate" ]; then
 	echo "Updating tomate"
 	cd ~/.natim-tomate
-	git pull
+	git pull --quiet
 	unlink /usr/local/bin/tomate
 	ln -s "$homedir/.natim-tomate/tomate.py" /usr/local/bin/tomate
 	cd $scriptdir
