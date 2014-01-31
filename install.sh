@@ -116,6 +116,16 @@ else
 	ln -s "$homedir/.natim-tomate/tomate.py" /usr/local/bin/tomate
 fi
 
+if ! [ "$(exists anki)" -eq 1 ]; then
+	printf "Downloading and Installing Anki "
+	baseurl="http://ankisrs.net/download/mirror/"
+	anki=`curl -s $baseurl | grep anki- | head -n 1 | sed 's/.*=\"\(.*\)*....\".*/\1/'`
+	printf "%-18s" "(${anki})"
+	url="${baseurl}${anki}.deb"
+	curl -s $url > "${anki}.deb"
+	dpkg -i "${anki}.deb" &> /dev/null && printf "%s\n" "installed" || printf "%s\n" "fail"
+	rm "${anki}.deb"
+fi
 
 
 shopt -u extglob # turn if off - whitespace removal
