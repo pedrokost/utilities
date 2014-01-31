@@ -1,6 +1,9 @@
-# package         # comment is MANDATORY
-git               # version control system
-zsh               # replacement for the Bourne shell, with great fitures
-xdg-utils         # for xdg-open which opens apps from the command line
-vlc               # The media player that plays everything
-trash-cli         # replacement for rm, which puts stuff in the trash
+# package                  # comment is MANDATORY
+git                        # version control system
+zsh                        # replacement for the Bourne shell, with great fitures
+xdg-utils                  # for xdg-open which opens apps from the command line
+vlc                        # The media player that plays everything
+trash-cli                  # replacement for rm, which puts stuff in the trash
+sublime-text-installer     # sublime text 3 installer
+
+

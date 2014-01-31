@@ -1,4 +1,5 @@
 #!/bin/bash
+shopt -s extglob # turn it on (for whitespace removal)
 
 scriptdir="`pwd`"
 
@@ -15,22 +16,44 @@ function exists() {
 	fi
 }
 
+function empty_or_comment() {
+	line="${1##*( )}"  # trim leading whitespace
+	if [ -z "$line" ];then
+		return 0 # skip if empty space
+	fi
+	if [[ $line == \#* ]]; then
+		return 0 # if not comment line
+	fi
+	return 1
+}
+
+
+echo "Adding PPAs"
+while read line           
+do
+	empty_or_comment "$line" && continue
+
+	ppa=(${line//\#/ })
+	printf "%-50s" "$ppa"
+	add-apt-repository -y $ppa &> /dev/null && printf "%s\n" "ok" || printf "%s\n" "fail"
+done < ppas.txt
+
+printf "%-50s" "Updating packages (can take a while)"
+apt-get update  &> /dev/null && printf "%s\n" "ok" || printf "%s\n" "fail"
+
 echo "Installing packages"
 while read line           
 do
-	if ! [[ $line == \#* ]]; then  # if not comment line
-		#statements
-		package=(${line//\#/ })
-		# echo "Installing $package"
-		status=`dpkg-query -W -f='${Status}' ${package[0]} 2>/dev/null`
+	empty_or_comment "$line" && continue
+ 
+	package=(${line//\#/ })
+	status=`dpkg-query -W -f='${Status}' ${package[0]} 2>/dev/null`
 
-    	printf "%-20s " "$package"
-    	if ! [[ $status == "install ok installed" ]]; then
-    		`sudo apt-get install -qq -y $package 1>/dev/null`
-    		printf "%s\n" "installed"
-    	else
-    		printf "%s\n" "ok"
-    	fi
+	printf "%-30s " "$package"
+	if ! [[ $status == "install ok installed" ]]; then
+		apt-get install -qq -y $package &>/dev/null && printf "%s\n" "installed" || printf "%s\n" "fail"
+	else
+		printf "%s\n" "ok"
 	fi
 done < packages.txt
 
@@ -93,3 +116,6 @@ else
 	ln -s "$homedir/.natim-tomate/tomate.py" /usr/local/bin/tomate
 fi
 
+
+
+shopt -u extglob # turn if off - whitespace removal
