@@ -116,6 +116,16 @@ else
 	ln -s "$homedir/.natim-tomate/tomate.py" /usr/local/bin/tomate
 fi
 
+if [ -d "$homedir/.i3/i3-exit" ]; then
+	echo "Updating i3-exit"
+	cd "$homedir/.i3/i3-exit"
+	git pull --quiet
+	cd $scriptdir
+else
+	echo "Installing i3-exit"
+	git clone https://gist.github.com/5675359.git "$homedir/.i3/i3-exit"
+fi
+
 if ! [ "$(exists anki)" -eq 1 ]; then
 	printf "Downloading and Installing Anki "
 	baseurl="http://ankisrs.net/download/mirror/"
