@@ -1,6 +1,4 @@
 # ppa url                           # comment for what it is MANDATORILY
 ppa:webupd8team/sublime-text-3      # Sublime text 3 beta
-
-
-
-ppa:me-davidsansome/clementine-dev      # Clementine music player
+ppa:me-davidsansome/clementine-dev  # Clementine music player
+ppa:indicator-brightness/ppa        # Brightness indicator for controlling brightness

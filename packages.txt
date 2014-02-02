@@ -7,4 +7,5 @@ trash-cli                  # replacement for rm, which puts stuff in the trash
 sublime-text-installer     # sublime text 3 installer
 
 
-clementine        # clementine music player
+clementine                 # clementine music player
+indicator-brightness       # brightness indicator for controlling brightness
