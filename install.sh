@@ -129,7 +129,7 @@ fi
 if ! [ "$(exists anki)" -eq 1 ]; then
 	printf "Downloading and Installing Anki "
 	baseurl="http://ankisrs.net/download/mirror/"
-	anki=`curl -s $baseurl | grep anki- | head -n 1 | sed 's/.*=\"\(.*\)*....\".*/\1/'`
+	anki=`curl -s $baseurl | grep anki- | tail -n 1 | sed 's/.*=\"\(.*\)*....\".*/\1/'`
 	printf "%-18s" "(${anki})"
 	url="${baseurl}${anki}.deb"
 	curl -s $url > "${anki}.deb"
