@@ -9,8 +9,8 @@ curl                       # Alternative to wget
 virtualbox                 # VM virtulaization software
 terminator                 # A better shell decorator
 feh                        # To edit backgrounds
-vagrant 				   # VM environment`
-
+vagrant 				   # VM environment
+zeal                       # Offline API docs
 clementine                 # clementine music player
 indicator-brightness       # brightness indicator for controlling brightness
 texlive 				   # Latex
