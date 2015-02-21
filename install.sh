@@ -57,10 +57,16 @@ do
 	fi
 done < packages.txt
 
-if ! [ -d "$homedir/.oh-my-zsh" ]; then
-	echo "Downloading and installing oh-my-zsh"
-	wget --quiet --no-check-certificate https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | sh
-fi
+#if ! [ -d "$homedir/.oh-my-zsh" ]; then
+#	echo "Downloading and installing oh-my-zsh"
+#	wget --quiet --no-check-certificate https://github.com/#robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | sh
+#fi
+
+# TODO: prezto
+git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
+
+# If in trouble read this: http://joshsymonds.com/blog/2014/06/12/shell-awesomeness-with-prezto/
+
 
 if ! [ "$(exists fasd)" -eq 1 ]
 then
@@ -77,7 +83,7 @@ fi
 if ! [ "$(exists calibre)" -eq 1 ]
 then
 	echo "Installing Calibre"
-	sudo python -c "import sys; py3 = sys.version_info[0] > 2; u = __import__('urllib.request' if py3 else 'urllib', fromlist=1); exec(u.urlopen('http://status.calibre-ebook.com/linux_installer').read()); main()"
+	sudo -v && wget -nv -O- https://raw.githubusercontent.com/kovidgoyal/calibre/master/setup/linux-installer.py | sudo python -c "import sys; main=lambda:sys.stderr.write('Download failed\n'); exec(sys.stdin.read()); main()"
 fi
 
 # IMG2PDF
@@ -101,19 +107,6 @@ then
 	ln -s $scriptdir/youtube-dl /usr/local/bin/ytdl 
 	chmod u+x youtube-dl
 	alias ytdlmp3='ytdl --extract-audio --audio-format "mp3"' #FIXME
-fi
-
-if [ -d "$homedir/.natim-tomate" ]; then
-	echo "Updating tomate"
-	cd ~/.natim-tomate
-	git pull --quiet
-	unlink /usr/local/bin/tomate
-	ln -s "$homedir/.natim-tomate/tomate.py" /usr/local/bin/tomate
-	cd $scriptdir
-else
-	echo "Installing tomate"
-	git clone https://git.gitorious.org/~natim/tomate/natim-tomate.git "$homedir/.natim-tomate"
-	ln -s "$homedir/.natim-tomate/tomate.py" /usr/local/bin/tomate
 fi
 
 if [ -d "$homedir/.i3/i3-exit" ]; then

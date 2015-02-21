@@ -11,7 +11,9 @@ terminator                 # A better shell decorator
 feh                        # To edit backgrounds
 vagrant 				   # VM environment
 zeal                       # Offline API docs
-clementine                 # clementine music player
+#clementine                 # clementine music player
 indicator-brightness       # brightness indicator for controlling brightness
-texlive 				   # Latex
-texstudio 				   # TexStudio: latex editor
+#texlive 				   # Latex
+#texstudio 				   # TexStudio: latex editor
+redshift 				   # Dim screen automatically
+indicator-sound
