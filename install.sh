@@ -130,5 +130,19 @@ if ! [ "$(exists anki)" -eq 1 ]; then
 	rm "${anki}.deb"
 fi
 
+if ! [ "$(exists j4-dmenu-desktop)" -eq 1 ]; then
+	printf "Cloning j4-dmenu-desktop"
+	git clone git@github.com:enkore/j4-dmenu-desktop.git
+	printf "Installing j4-dmenu-desktop"
+	cd j4-dmenu-desktop
+	cmake .
+	make
+	sudo make install
+	cd ..
+	rm -rf j4-dmenu-desktop
+	printf "j4-dmenu-desktop installed"
+
+fi
+
 
 shopt -u extglob # turn if off - whitespace removal

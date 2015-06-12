@@ -17,3 +17,4 @@ indicator-brightness       # brightness indicator for controlling brightness
 #texstudio 				   # TexStudio: latex editor
 redshift 				   # Dim screen automatically
 indicator-sound
+cmake                      # for j4-dmenu-desktop
