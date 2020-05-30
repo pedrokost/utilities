@@ -1,0 +1,50 @@
+---
+
+- hosts: localhost
+  user: pedro
+  connection: local
+
+
+  vars_files:
+    - vars/main.yml
+
+  roles:
+    - geerlingguy.dotfiles
+
+  pre_tasks:
+    - name: Update apt cache if needed
+      apt: update_cache=yes cache_valid_time=3600
+    
+    
+  tasks:
+    - name: Remove broken Ubuntu PPA for Ansible (not working on focal)
+      apt_repository:
+        repo: "ppa:ansible/ansible"
+        state: absent      
+        update_cache: yes
+   
+    - name: Add GPG key for Sublime Text
+      apt_key:
+          url: "https://download.sublimetext.com/sublimehq-pub.gpg"
+          state: present
+
+    - name: Add APT repository for Sublime Text
+      apt_repository:
+          filename: sublime-text.list
+          repo: deb https://download.sublimetext.com/ apt/stable/
+          update_cache: yes
+
+    - name: Add required PPA repositories
+      apt_repository: 
+          repo: "{{item}}" 
+          update_cache: yes
+      with_items: "{{ppas}}"
+
+    #- name: Update APT repository
+    #  apt:
+    #      update_cache: yes # todo only if above changed?
+
+    - name: Install apt packages
+      apt:
+          name: "{{ apt_installed_packages }}"
+          state: present

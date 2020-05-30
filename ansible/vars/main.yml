@@ -1,0 +1,24 @@
+---
+apt_installed_packages:
+    - apt-transport-https        # ensure apt is setup to work with https sources
+    - git                        # version control system
+    - zsh                        # replacement for the Bourne shell, with great features
+    - xdg-utils                  # for xdg-open which opens apps from the command line
+    - vlc                        # The media player that plays everything
+    - trash-cli                  # replacement for rm, which puts stuff in the trash
+    - sublime-text		 # sublime text 3 installer
+    - curl                       # Alternative to wget
+    - virtualbox                 # VM virtulaization software
+    - terminator                 # A better shell decorator
+    - feh                        # To edit backgrounds
+    - vagrant                    # VM environment
+    - redshift                   # Dim screen automatically
+    - cmake                      # for j4-dmenu-desktop
+    - zeal                       # For Offline Docs
+
+#dotfiles_repo: https://github.com/pedrokost/dotfiles.git
+#dotfiles_repo_local_destination: ~/repositories/dotfiles
+#dotfiles_files: []
+
+
+ppas: []
