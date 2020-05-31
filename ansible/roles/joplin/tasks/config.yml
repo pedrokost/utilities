@@ -1,0 +1,36 @@
+---
+
+- name: config| install npm for CLI [{{ user.username }}]
+  become: true
+  become_user: root
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - npm
+
+# - name: config| create CLI binary directory [{{ user.username }}]
+#   file:
+#     path: ~/.joplin-bin
+#     state: directory
+
+# I could not get the npm module to work appropriately here and I don't know why
+- name: config| install joplin via command module [{{ user.username }}]
+  shell: NPM_CONFIG_PREFIX=~/.joplin-bin npm install -g joplin
+
+- name: config| use CLI to generate database and update settings [{{ user.username }}]
+  shell: ~/.joplin-bin/bin/joplin config '{{ item.key }}' '{{ item.val }}'
+  with_items:
+    - "{{ user.settings }}"
+  no_log: true
+
+- name: config| create GUI config directory [{{ user.username }}]
+  file:
+    path: ~/.config/joplin-desktop
+    state: directory
+
+- name: config| copy the CLI database to the GUI location [{{ user.username }}]
+  copy:
+    src: ~/.config/joplin/database.sqlite
+    dest: ~/.config/joplin-desktop
+    remote_src: true

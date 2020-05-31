@@ -1,0 +1,23 @@
+---
+- name: Converge
+  hosts: all
+  pre_tasks:
+  - name: create test users
+    become: true
+    user:
+      name: '{{ item }}'
+      state: present
+      home: '/home/{{ item }}'
+      createhome: true
+    with_items:
+      - test_usr1
+      - test_usr2
+      - test_usr3
+  roles:
+    - role: ansible-role-joplin
+      users:
+        - username: test_usr1
+          settings:
+            - { key: 'dateFormat', val: 'YYYY-MM-DD' }
+            - { key: 'theme', val: '2' }
+        - username: test_usr3

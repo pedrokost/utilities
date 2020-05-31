@@ -1,0 +1,28 @@
+---
+dependencies: []
+
+galaxy_info:
+  author: thisdwhitley
+  description: install joplin AppImage
+  license: license (MIT)
+  min_ansible_version: 2.4
+  platforms:
+    - name: EL
+      versions:
+        - 6
+        - 7
+    - name: Fedora
+      versions:
+        - 27
+        - 28
+        - 29
+    - name: Debian
+      versions:
+        - 8
+        - 9
+    - name: Ubuntu
+      versions:
+        - 14.04
+        - 16.04
+        - 18.04
+    - galaxy_tags: joplin

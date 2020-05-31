@@ -3,6 +3,7 @@
 - hosts: localhost
   user: pedro
   connection: local
+  become: yes
 
   vars:
       - is_home_laptop: true
@@ -11,8 +12,15 @@
     - vars/main.yml
 
   roles:
-    - geerlingguy.dotfiles
-    - baztian.calibre
+    - role: geerlingguy.dotfiles
+    - role: baztian.calibre
+    - role: joplin
+      users:
+        - username: pedro
+          settings:
+            - { key: "sidebarVisibility", val: "1" }
+            - { key: "dateFormat", val: "YYYY-MM-DD" }
+            - { key: "sync.target", val: "5" }
 
   pre_tasks:
     - name: Update apt cache if needed
@@ -63,3 +71,32 @@
     - name: Install jrnl
       pip:
          name: jrnl
+
+    - name: Install prezto from git.
+      git:
+          repo: https://github.com/sorin-ionescu/prezto.git
+          dest: "{{ lookup('env','HOME') }}/.zprezto/"
+          track_submodules: true
+          force: true
+          update: false
+
+    - name: Install prezto dotfiles.
+      file:
+          src: "{{ item }}"
+          dest: "{{ lookup('env','HOME') }}/.{{ item | basename }}"
+          state: link
+      with_fileglob: "{{ lookup('env','HOME') }}/.zprezto/runcoms/*"
+      when: item|basename != "README.md"
+
+    - name: Install prezto theme from git.
+      git:
+          repo: "https://github.com/romkatv/powerlevel10k.git"
+          dest: "{{ lookup('env','HOME')}}/.zprezto/modules/prompt/external/powerlevel10k"
+          force: true
+
+    - name: Link prezto theme.
+      file:
+          src: "{{ lookup('env','HOME')}}/.zprezto/modules/prompt/external/powerlevel10k/powerlevel10k.zsh-theme"
+          dest: "{{ lookup('env','HOME')}}/.zprezto/modules/prompt/functions/prompt_powerlevel10k_setup"
+          state: link
+          force: true		

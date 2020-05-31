@@ -1,3 +1,6 @@
 ---
 - src: geerlingguy.dotfiles
 - src: baztian.calibre
+- src: https://github.com/thisdwhitley/ansible-role-joplin.git
+  scm: git
+  name: joplin
