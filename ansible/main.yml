@@ -4,12 +4,15 @@
   user: pedro
   connection: local
 
+  vars:
+      - is_home_laptop: true
 
   vars_files:
     - vars/main.yml
 
   roles:
     - geerlingguy.dotfiles
+    - baztian.calibre
 
   pre_tasks:
     - name: Update apt cache if needed
@@ -48,3 +51,15 @@
       apt:
           name: "{{ apt_installed_packages }}"
           state: present
+
+    - name: Install img2pdf
+      pip:
+          name: img2pdf
+
+    - name: Install Youtube-DL
+      pip:
+          name: youtube_dl
+
+    - name: Install jrnl
+      pip:
+         name: jrnl

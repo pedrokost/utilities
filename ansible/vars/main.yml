@@ -15,6 +15,9 @@ apt_installed_packages:
     - redshift                   # Dim screen automatically
     - cmake                      # for j4-dmenu-desktop
     - zeal                       # For Offline Docs
+    - python3-pip                # PiP: for installing packages
+    - unzip                      # for ansible unarchive
+    - anki                       # Anki: memory cards
 
 #dotfiles_repo: https://github.com/pedrokost/dotfiles.git
 #dotfiles_repo_local_destination: ~/repositories/dotfiles
@@ -22,3 +25,8 @@ apt_installed_packages:
 
 
 ppas: []
+
+calibre_version: 4.17.0		
+# Get checksum from https://calibre-ebook.com/signatures/
+#calibre_sha256: a020a79096c107c2ae008c7be5060a70a3d6b5cb70117b06b659ae1dd925c0e5
+calibre_checksum: sha512:ae4f1fe88dc62ddeb1619e8877cd4258872c965b080b8e17207dd9d39afd562acfcd06dd8625cdb7f99ece393e3bfbc64215d6117b4e2c57a8eb502ad1b20cb1

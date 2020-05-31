@@ -1,0 +1,15 @@
+galaxy_info:
+  author: baztian
+  role_name: calibre
+  description: Role for installing calibre
+  license: MIT
+  min_ansible_version: 2.0
+  platforms:
+  - name: Ubuntu
+    versions:
+    - xenial
+  galaxy_tags:
+    - ebook
+    - epub
+    - calibre
+dependencies: []
