@@ -100,3 +100,5 @@
           dest: "{{ lookup('env','HOME')}}/.zprezto/modules/prompt/functions/prompt_powerlevel10k_setup"
           state: link
           force: true		
+
+# TODO: mullvad, chsh, dropbox, rbenv

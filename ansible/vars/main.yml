@@ -18,6 +18,7 @@ apt_installed_packages:
     - python3-pip                # PiP: for installing packages
     - unzip                      # for ansible unarchive
     - anki                       # Anki: memory cards
+    - powertop                   # PowerTop: Power statistics
 
 #dotfiles_repo: https://github.com/pedrokost/dotfiles.git
 #dotfiles_repo_local_destination: ~/repositories/dotfiles
