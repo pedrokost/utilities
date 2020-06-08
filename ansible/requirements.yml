@@ -4,3 +4,5 @@
 - src: https://github.com/thisdwhitley/ansible-role-joplin.git
   scm: git
   name: joplin
+- src: oefenweb.dropbox
+- src: zzet.rbenv

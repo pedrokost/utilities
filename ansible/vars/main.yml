@@ -31,3 +31,14 @@ calibre_version: 4.17.0
 # Get checksum from https://calibre-ebook.com/signatures/
 #calibre_sha256: a020a79096c107c2ae008c7be5060a70a3d6b5cb70117b06b659ae1dd925c0e5
 calibre_checksum: sha512:ae4f1fe88dc62ddeb1619e8877cd4258872c965b080b8e17207dd9d39afd562acfcd06dd8625cdb7f99ece393e3bfbc64215d6117b4e2c57a8eb502ad1b20cb1
+
+
+# dropbox_version: "99.3.496"
+dropbox_version: 2020.03.04 
+
+rbenv:
+    env: system
+    version: v1.0.0
+    default_ruby: 2.6.5
+    rubies:
+        - version: 2.6.5

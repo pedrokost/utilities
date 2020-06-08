@@ -12,8 +12,10 @@
     - vars/main.yml
 
   roles:
-    - role: geerlingguy.dotfiles
+    # - role: geerlingguy.dotfiles
     - role: baztian.calibre
+    - role: oefenweb.dropbox
+    - role: zzet.rbenv
     - role: joplin
       users:
         - username: pedro
@@ -101,4 +103,20 @@
           state: link
           force: true		
 
-# TODO: mullvad, chsh, dropbox, rbenv
+    - name: change user shell to zsh
+      user:
+        name: "{{ lookup('env', 'USER') }}"
+        shell: /bin/zsh
+
+    - name: checek mullvad not installed
+      shell: command -v mullvad >/dev/null 2>&1
+      register: mullvad_exists    
+      ignore_errors: yes
+
+    - debug: msg="{{ mullvad_exists.rc }}" # it returns rc 1
+    - debug: var=mullvad_exists
+
+
+
+# TODO: mullvad, mkvirtualenv
+# TODO: dotfiles    
