@@ -23,6 +23,7 @@
             - { key: "sidebarVisibility", val: "1" }
             - { key: "dateFormat", val: "YYYY-MM-DD" }
             - { key: "sync.target", val: "5" }
+    - role: lciolecki.virtualenvwrapper
 
   pre_tasks:
     - name: Update apt cache if needed
@@ -74,45 +75,16 @@
       pip:
          name: jrnl
 
-    - name: Install prezto from git.
-      git:
-          repo: https://github.com/sorin-ionescu/prezto.git
-          dest: "{{ lookup('env','HOME') }}/.zprezto/"
-          track_submodules: true
-          force: true
-          update: false
+    - include_tasks:
+        file: tasks/zsh.yml
 
-    - name: Install prezto dotfiles.
-      file:
-          src: "{{ item }}"
-          dest: "{{ lookup('env','HOME') }}/.{{ item | basename }}"
-          state: link
-      with_fileglob: "{{ lookup('env','HOME') }}/.zprezto/runcoms/*"
-      when: item|basename != "README.md"
-
-    - name: Install prezto theme from git.
-      git:
-          repo: "https://github.com/romkatv/powerlevel10k.git"
-          dest: "{{ lookup('env','HOME')}}/.zprezto/modules/prompt/external/powerlevel10k"
-          force: true
-
-    - name: Link prezto theme.
-      file:
-          src: "{{ lookup('env','HOME')}}/.zprezto/modules/prompt/external/powerlevel10k/powerlevel10k.zsh-theme"
-          dest: "{{ lookup('env','HOME')}}/.zprezto/modules/prompt/functions/prompt_powerlevel10k_setup"
-          state: link
-          force: true		
-
-    - name: change user shell to zsh
-      user:
-        name: "{{ lookup('env', 'USER') }}"
-        shell: /bin/zsh
+    - include_tasks: 
+        file: tasks/mullvad.yml
 
 
 
 
 
-# TODO: mullvad, mkvirtualenv
-# TODO: dotfiles    
 # TODO: j
+# TODO: dotfiles    
 # 

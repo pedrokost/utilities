@@ -1,0 +1,24 @@
+---
+
+- name: Install virtualenv
+  become: yes
+  action:
+    module: pip
+    name: virtualenv
+    version: "{{ virtualenv_version }}"
+    state: present
+  when: virtualenv_version | default(None) != None
+  tags:
+    - virtualenvwrapper
+    - virtualenvwrapper.install
+
+- name: Install virtualenvwrapper
+  become: yes
+  action:
+    module: pip
+    name: virtualenvwrapper
+    version: "{{ virtualenvwrapper_version }}"
+    state: present
+  tags:
+    - virtualenvwrapper
+    - virtualenvwrapper.install

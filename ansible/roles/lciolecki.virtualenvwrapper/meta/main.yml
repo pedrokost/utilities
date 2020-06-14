@@ -1,0 +1,19 @@
+---
+
+galaxy_info:
+  author: lciolecki
+  description: "Ansible role install and configure virtualenvwrapper"
+  min_ansible_version: 2.0
+  license: MIT
+  platforms:
+    - name: Ubuntu
+      versions:
+        - all
+  categories:
+    - system
+    - development
+    - python
+    - virtualenv
+    - virtualenvwrapper
+
+dependencies: []

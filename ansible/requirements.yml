@@ -6,3 +6,4 @@
   name: joplin
 - src: oefenweb.dropbox
 - src: zzet.rbenv
+- src: lciolecki.virtualenvwrapper
