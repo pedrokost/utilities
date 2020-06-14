@@ -20,10 +20,12 @@ apt_installed_packages:
     - anki                       # Anki: memory cards
     - powertop                   # PowerTop: Power statistics
 
-#dotfiles_repo: https://github.com/pedrokost/dotfiles.git
-#dotfiles_repo_local_destination: ~/repositories/dotfiles
-#dotfiles_files: []
 
+dotfiles_repo: https://github.com/pedrokost/dotfiles.git
+dotfiles_repo_version: feature/ansible
+dotfiles_repo_local_destination: ~/repositories/dotfiles
+dotfiles_files: 
+    - .zshrc
 
 ppas: []
 
