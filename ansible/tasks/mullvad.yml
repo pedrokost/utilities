@@ -1,0 +1,27 @@
+---
+
+- name: Check if Mullvad is installed
+  stat:
+    path: /usr/bin/mullvad
+  register: mullvad_stat
+
+- name: Check mullvad version
+  shell: "mullvad --version | rev | cut -d ' ' -f1 | rev"
+  register: current_mullvad_version
+  when: mullvad_stat.stat.exists
+  changed_when: False
+
+- name: scrape URL for latest mullvad version
+  uri:
+    url: https://api.github.com/repos/mullvad/mullvadvpn-app/releases/latest
+    return_content: true
+  register: latest_mullvad_json
+
+- name: split it out latest mullvad version
+  set_fact:
+    latest_mullvad_version: "{{ latest_mullvad_json.json.tag_name | regex_replace('v') }}"
+
+- name: Install latest Mullvad version
+  apt:
+    deb: "https://github.com/mullvad/mullvadvpn-app/releases/download/{{latest_mullvad_version}}/MullvadVPN-{{latest_mullvad_version}}_amd64.deb"
+  when: not mullvad_stat.stat.exists or latest_mullvad_version != current_mullvad_version.stdout

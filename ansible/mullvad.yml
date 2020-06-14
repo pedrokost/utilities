@@ -1,0 +1,19 @@
+---
+
+- hosts: localhost
+  user: pedro
+  connection: local
+  become: yes
+
+  vars:
+    - is_home_laptop: true
+
+  vars_files:
+    - vars/main.yml
+
+  tasks:
+    - include_tasks: 
+        file: tasks/mullvad.yml
+
+
+
