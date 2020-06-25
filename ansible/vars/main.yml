@@ -19,13 +19,20 @@ apt_installed_packages:
     - unzip                      # for ansible unarchive
     - anki                       # Anki: memory cards
     - powertop                   # PowerTop: Power statistics
+    - tlp                        # TLP: More battery for you
 
 
-dotfiles_repo: https://github.com/pedrokost/dotfiles.git
+dotfiles_repo: /home/pedro/dotfiles/
 dotfiles_repo_version: feature/ansible
-dotfiles_repo_local_destination: ~/repositories/dotfiles
+dotfiles_repo_local_destination: ~/.ansible/repositories/dotfiles
 dotfiles_files: 
-    - .zshrc
+    - zshrc
+    - zpreztorc
+    - gitignore
+    - gemrc
+    # - bash_profile
+dotfiles_repo_accept_hostkey: false
+dotfiles_home: "~"
 
 ppas: []
 
