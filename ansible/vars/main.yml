@@ -33,7 +33,9 @@ dotfiles_files:
     - zpreztorc
     - gitignore
     - gemrc
-    # - bash_profile
+    - gitconfig
+    - gitignore
+
 dotfiles_repo_accept_hostkey: false
 dotfiles_home: "~"
 

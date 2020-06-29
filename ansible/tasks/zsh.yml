@@ -32,3 +32,4 @@
   user:
     name: "{{ lookup('env', 'USER') }}"
     shell: /bin/zsh
+  become: true
