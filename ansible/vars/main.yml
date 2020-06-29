@@ -29,6 +29,7 @@ dotfiles_repo: /home/pedro/dotfiles/
 dotfiles_repo_version: feature/ansible
 dotfiles_repo_local_destination: ~/.ansible/repositories/dotfiles
 dotfiles_files: 
+    - p10k.zsh
     - zshrc
     - zpreztorc
     - gitignore
