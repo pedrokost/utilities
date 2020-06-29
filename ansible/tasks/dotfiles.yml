@@ -30,9 +30,43 @@
   become: false
   with_items: "{{ dotfiles_files }}"
 
+- name: Ensure old Xresources is deleted
+  file:
+    path: "{{ dotfiles_home }}/.config/regolith/Xresources"
+    state: absent
+
 - name: Link Xresources
   file:
     src: "{{ dotfiles_repo_local_destination}}/Xresources"
     dest: "{{dotfiles_home}}/.config/regolith/Xresources"
     state: link
   become: false
+
+- name: Remind me to go to sleep
+  cron:
+    name: "Sleeping time is here"
+    minute: "*/15"
+    hour: "20-23"
+    weekday: "0-6"
+    job: 'DISPLAY=:0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus /usr/bin/notify-send -t 60000 \Turn off computer. Relax." \It''s time to relax and shut off all screens.\nGo read a book and prepare for sleep.\nPrepare things for tomorrow.\nPut your mind to paper" >/tmp/cronlog2 2>&1'
+  become: false
+
+- name: Sleep quote
+  cron:
+    name: "Sleeping quote"
+    minute: "*/15"
+    hour: "20-23"
+    weekday: "0-6"
+    job: "DISPLAY=:0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus bash {{dotfiles_repo_local_destination}}/gotosleep_espeak.sh"
+  become: false
+
+
+- name: Set hostsfiles
+  cron:
+    name: "Hostsfiles"
+    job: "DISPLAY=:0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus if [ ! -e /etc/hosts ]; then /usr/bin/notify-send -u low -t 60000 \"Host file does not exists.\"  \"Run togglehost to place it back\"; fi"
+  become: false
+
+
+
+
