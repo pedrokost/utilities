@@ -23,6 +23,7 @@ apt_installed_packages:
     - espeak                     # creapy computer voice
     - libnotify-bin              # installs notify-send to send notifications
     - dunst                      # Intrusive notifications
+    - arandr                     # Multi-Display config that works 
 
 
 dotfiles_repo: /home/pedro/dotfiles/
