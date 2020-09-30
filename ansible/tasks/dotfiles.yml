@@ -42,6 +42,18 @@
     state: link
   become: false
 
+- name: Ensure old comptom config is deleted
+  file:
+    path: "{{ dotfiles_home }}/.config/regolith/compton/config"
+    state: absent
+
+- name: Link new comptom config
+  file:
+    src: "{{ dotfiles_repo_local_destination}}/compton_config"
+    dest: "{{dotfiles_home}}/.config/regolith/compton/config"
+    state: link
+  become: false
+
 - name: Remind me to go to sleep
   cron:
     name: "Sleeping time is here"
