@@ -7,13 +7,13 @@
     force: true
     update: false
 
-- name: Install prezto dotfiles.
-  file:
-    src: "{{ item }}"
-    dest: "{{ lookup('env','HOME') }}/.{{ item | basename }}"
-    state: link
-  with_fileglob: "{{ lookup('env','HOME') }}/.zprezto/runcoms/*"
-  when: item|basename != "README.md"
+# - name: Install prezto dotfiles.
+#   file:
+#     src: "{{ item }}"
+#     dest: "{{ lookup('env','HOME') }}/.{{ item | basename }}"
+#     state: link
+#   with_fileglob: "{{ lookup('env','HOME') }}/.zprezto/runcoms/*"
+#   when: item|basename != "README.md"
 
 - name: Install prezto theme from git.
   git:

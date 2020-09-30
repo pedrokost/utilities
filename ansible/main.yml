@@ -22,7 +22,7 @@
             - { key: "sidebarVisibility", val: "1" }
             - { key: "dateFormat", val: "YYYY-MM-DD" }
             - { key: "sync.target", val: "5" }
-    - role: lciolecki.virtualenvwrapper
+    - role: lciolecki.virtualenvwrapper # FIMXE: Requires pip3. Fails otherwise.
 
   pre_tasks:
     - name: Update apt cache if needed
@@ -80,11 +80,7 @@
     - include_tasks: 
         file: tasks/mullvad.yml
 
-    # - include_tasks: 
-    #     file: tasks/dotfiles.yml
+    - include_tasks: 
+        file: tasks/dotfiles.yml
 
 
-
-# TODO: dotfiles          
-# TODO: j
-# TODO: Turn off computer alerts

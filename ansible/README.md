@@ -9,5 +9,5 @@ ansible-galaxy install -r requirements.yml
 ## Run playbook
 
 ```
-
+ansible-playbook -K main.yml
 ```

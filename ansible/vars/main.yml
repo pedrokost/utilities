@@ -26,14 +26,13 @@ apt_installed_packages:
     - arandr                     # Multi-Display config that works 
 
 
-dotfiles_repo: /home/pedro/dotfiles/
+dotfiles_repo: https://github.com/pedrokost/dotfiles.git #/home/pedro/dotfiles/
 dotfiles_repo_version: feature/ansible
 dotfiles_repo_local_destination: ~/.ansible/repositories/dotfiles
 dotfiles_files: 
     - p10k.zsh
     - zshrc
     - zpreztorc
-    - gitignore
     - gemrc
     - gitconfig
     - gitignore
