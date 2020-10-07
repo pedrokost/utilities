@@ -24,6 +24,19 @@ apt_installed_packages:
     - libnotify-bin              # installs notify-send to send notifications
     - dunst                      # Intrusive notifications
     - arandr                     # Multi-Display config that works 
+    - i3xrocks-battery           # Shows the battery indicator on the i3bar
+    - i3xrocks-temp              # Shows CPU temp
+    - i3xrocks-volume            # Shows Volume indicator
+    - i3xrocks-volume            # Shows Volume indicator
+    - i3xrocks-wifi              # Shows wifi name indicator
+    - regolith-compositor-none   # Noop compositor instead of compton (autoremoves others)
+    - sublime-merge              # Noop compositor instead of compton (autoremoves others)
+    - imagemagick                # CLI photo editing
+
+# TODO: ensure absent
+apt_removed_packages:
+    - i3xrocks-memory            # Never run out
+    - i3xrocks-cpu-usage         # Temp is enough
 
 
 dotfiles_repo: git@github.com:pedrokost/dotfiles.git #/home/pedro/dotfiles/
