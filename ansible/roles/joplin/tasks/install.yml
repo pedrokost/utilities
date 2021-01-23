@@ -45,7 +45,7 @@
         name: ~/.joplin
         state: directory
     #####
-    # wget -nv --show-progress -O ~/.joplin/Joplin.AppImage https://github.com/laurent22/joplin/releases/download/v$version/Joplin-$version-x86_64.AppImage 
+    # wget -nv --show-progress -O ~/.joplin/Joplin.AppImage https://github.com/laurent22/joplin/releases/download/v$version/Joplin-$version-x86_64.AppImage
     # chmod +x ~/.joplin/Joplin.AppImage
     - name: install| download the latest version [{{ user.username }}]
       get_url:
@@ -65,11 +65,11 @@
     #####
     # (cd $TMPDIR && ~/.joplin/Joplin.AppImage --appimage-extract joplin.desktop &> /dev/null)
     - name: install| extract the AppImage to find buildid [{{ user.username }}]
-      shell: cd /tmp && ~/.joplin/Joplin.AppImage --appimage-extract joplin.desktop &> /dev/null
+      shell: cd /tmp && ~/.joplin/Joplin.AppImage --appimage-extract @joplinapp-desktop.desktop &> /dev/null
     #####
-    # APPIMAGE_VERSION=$(grep "^X-AppImage-BuildId=" $TMPDIR/squashfs-root/joplin.desktop | head -n 1 | cut -d " " -f 1)
+    # APPIMAGE_VERSION=$(grep "^X-AppImage-BuildId=" $TMPDIR/squashfs-root/@joplinapp-desktop.desktop | head -n 1 | cut -d " " -f 1)
     - name: install| capture the BuildId from the AppImage itself [{{ user.username }}]
-      command: awk '/^X-AppImage-BuildId=/ {print $1;exit;}' /tmp/squashfs-root/joplin.desktop
+      command: awk '/^X-AppImage-BuildId=/ {print $1;exit;}' /tmp/squashfs-root/@joplinapp-desktop.desktop
       register: BUILDID_line
     #####
     # rm -rf $TMPDIR/squashfs-root
@@ -95,5 +95,5 @@
       copy:
         content: "{{ latest_version }}"
         dest: ~/.joplin/VERSION
-  when: (not VERSION_file.stat.exists) or 
-        (VERSION_contents != latest_version)
+  when: (not VERSION_file.stat.exists) or
+    (VERSION_contents != latest_version)

@@ -33,6 +33,7 @@ apt_installed_packages:
     - sublime-merge              # Noop compositor instead of compton (autoremoves others)
     - imagemagick                # CLI photo editing
     - appimagelauncher           # For managing AppImages
+    - fonts-noto-color-emoji     # Emoji fonts for Chrome
 
 # TODO: ensure absent
 apt_removed_packages:
