@@ -1,50 +1,49 @@
 ---
 apt_installed_packages:
-    - apt-transport-https        # ensure apt is setup to work with https sources
-    - git                        # version control system
-    - zsh                        # replacement for the Bourne shell, with great features
-    - xdg-utils                  # for xdg-open which opens apps from the command line
-    - vlc                        # The media player that plays everything
-    - trash-cli                  # replacement for rm, which puts stuff in the trash
-    - sublime-text		 # sublime text 3 installer
-    - curl                       # Alternative to wget
-    - virtualbox                 # VM virtulaization software
-    - terminator                 # A better shell decorator
-    - feh                        # To edit backgrounds
-    - vagrant                    # VM environment
-    - redshift                   # Dim screen automatically
-    - cmake                      # for j4-dmenu-desktop
-    - zeal                       # For Offline Docs
-    - python3-pip                # PiP: for installing packages
-    - unzip                      # for ansible unarchive
-    - anki                       # Anki: memory cards
-    - powertop                   # PowerTop: Power statistics
-    - tlp                        # TLP: More battery for you
-    - espeak                     # creapy computer voice
-    - libnotify-bin              # installs notify-send to send notifications
-    - dunst                      # Intrusive notifications
-    - arandr                     # Multi-Display config that works 
-    - i3xrocks-battery           # Shows the battery indicator on the i3bar
-    - i3xrocks-temp              # Shows CPU temp
-    - i3xrocks-volume            # Shows Volume indicator
-    - i3xrocks-volume            # Shows Volume indicator
-    - i3xrocks-wifi              # Shows wifi name indicator
-    - regolith-compositor-none   # Noop compositor instead of compton (autoremoves others)
-    - sublime-merge              # Noop compositor instead of compton (autoremoves others)
-    - imagemagick                # CLI photo editing
-    - appimagelauncher           # For managing AppImages
-    - fonts-noto-color-emoji     # Emoji fonts for Chrome
+    - apt-transport-https # ensure apt is setup to work with https sources
+    - git # version control system
+    - zsh # replacement for the Bourne shell, with great features
+    - xdg-utils # for xdg-open which opens apps from the command line
+    - vlc # The media player that plays everything
+    - trash-cli # replacement for rm, which puts stuff in the trash
+    - sublime-text # sublime text 3 installer
+    - curl # Alternative to wget
+    - virtualbox # VM virtulaization software
+    - terminator # A better shell decorator
+    - feh # To edit backgrounds
+    - vagrant # VM environment
+    - redshift # Dim screen automatically
+    - cmake # for j4-dmenu-desktop
+    - zeal # For Offline Docs
+    - python3-pip # PiP: for installing packages
+    - unzip # for ansible unarchive
+    - anki # Anki: memory cards
+    - powertop # PowerTop: Power statistics
+    - tlp # TLP: More battery for you
+    - espeak # creapy computer voice
+    - libnotify-bin # installs notify-send to send notifications
+    - dunst # Intrusive notifications
+    - arandr # Multi-Display config that works
+    - i3xrocks-battery # Shows the battery indicator on the i3bar
+    - i3xrocks-temp # Shows CPU temp
+    - i3xrocks-volume # Shows Volume indicator
+    - i3xrocks-volume # Shows Volume indicator
+    - i3xrocks-wifi # Shows wifi name indicator
+    - regolith-compositor-none # Noop compositor instead of compton (autoremoves others)
+    - sublime-merge # Noop compositor instead of compton (autoremoves others)
+    - imagemagick # CLI photo editing
+    - appimagelauncher # For managing AppImages
+    - fonts-noto-color-emoji # Emoji fonts for Chrome
 
 # TODO: ensure absent
 apt_removed_packages:
-    - i3xrocks-memory            # Never run out
-    - i3xrocks-cpu-usage         # Temp is enough
-
+    - i3xrocks-memory # Never run out
+    - i3xrocks-cpu-usage # Temp is enough
 
 dotfiles_repo: git@github.com:pedrokost/dotfiles.git #/home/pedro/dotfiles/
 dotfiles_repo_version: feature/ansible
 dotfiles_repo_local_destination: ~/.ansible/repositories/dotfiles
-dotfiles_files: 
+dotfiles_files:
     - p10k.zsh
     - zshrc
     - zpreztorc
@@ -55,16 +54,15 @@ dotfiles_files:
 dotfiles_repo_accept_hostkey: false
 dotfiles_home: "~"
 
-ppas: 
+ppas:
     - ppa:appimagelauncher-team/stable
 
-calibre_version: 5.2.0
-# Get checksum from https://calibre-ebook.com/signatures/
-calibre_checksum: sha512:ef11e0fa0b1faeda437d7fa7d4e926b9882d306d013e768d97992974cc8beef1d8e665871259cfd06908fed8ba9788c0b3d61644191c6e50645d326ac3f2c506
-
+calibre_version: 5.14.0
+# Get checksum from https://calibre-ebook.com/signatures/ from -x86_64.txz.sha512
+calibre_checksum: sha512:546f873d7a823c0e66501317f7c2ce645b3104f03b3c8d834e570851e6a91ffab90e6ad3d7461eee57fbfe709cbe682c11d4407d6a07e0cad4659cce0d409368
 
 # dropbox_version: "99.3.496"
-dropbox_version: 2020.03.04 
+dropbox_version: 2020.03.04
 
 rbenv:
     env: system
@@ -72,6 +70,5 @@ rbenv:
     default_ruby: 2.6.5
     rubies:
         - version: 2.6.5
-
 
 virtualenvwrapper_shell_file: "{{ lookup('env', 'HOME') }}/.zshrc"
