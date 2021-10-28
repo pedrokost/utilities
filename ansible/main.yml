@@ -58,7 +58,7 @@
     - name: Install apt packages
       apt:
         name: "{{ apt_installed_packages }}"
-        state: present
+        state: latest
 
     - name: Install img2pdf
       pip:
