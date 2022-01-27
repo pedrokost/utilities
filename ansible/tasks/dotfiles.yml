@@ -79,6 +79,15 @@
     job: "DISPLAY=:0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus if [ ! -e /etc/hosts ]; then /usr/bin/notify-send -u low -t 60000 \"Host file does not exists.\"  \"Run togglehost to place it back\"; fi"
   become: false
 
+- name: Auto screenshoter
+  cron:
+    name: "Autoscreenshoter"
+    minute: "*/15"
+    hour: "*"
+    weekday: "*"
+    job: "DISPLAY=:0 bash {{dotfiles_repo_local_destination}}/auto-screenshoter.sh > /tmp/autoscreenshoter.log 2>&1"
+  become: false
+
 
 
 

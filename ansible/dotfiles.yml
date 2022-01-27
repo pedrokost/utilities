@@ -13,7 +13,4 @@
 
   tasks:
     - include_tasks: 
-        file: tasks/zsh.yml
-
-    - include_tasks: 
         file: tasks/dotfiles.yml
