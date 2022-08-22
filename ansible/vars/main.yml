@@ -57,9 +57,9 @@ dotfiles_home: "~"
 ppas:
     - ppa:appimagelauncher-team/stable
 
-calibre_version: 5.14.0
+calibre_version: 6.3.0
 # Get checksum from https://calibre-ebook.com/signatures/ from -x86_64.txz.sha512
-calibre_checksum: sha512:546f873d7a823c0e66501317f7c2ce645b3104f03b3c8d834e570851e6a91ffab90e6ad3d7461eee57fbfe709cbe682c11d4407d6a07e0cad4659cce0d409368
+calibre_checksum: sha512:b808b6e576b850220c155e19f92df3f01aa3d5e6b0961cb8cebf91e70f2de49fc48351cf0256dd798e2886174520ed0898e690a5504f48c3db97a8c125bf2868
 
 # dropbox_version: "99.3.496"
 dropbox_version: 2020.03.04
