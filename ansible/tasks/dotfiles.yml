@@ -35,17 +35,23 @@
     path: "{{ dotfiles_home }}/.config/regolith/Xresources"
     state: absent
 
+- name: Check if path regolith 1 config exists
+  stat: path={{dotfiles_home}}/.config/regolith
+  register: check_path_regolith_config
+
 - name: Link Xresources
   file:
     src: "{{ dotfiles_repo_local_destination}}/Xresources"
     dest: "{{dotfiles_home}}/.config/regolith/Xresources"
     state: link
   become: false
+  when: check_path_regolith_config.stat.exists
 
 - name: Ensure old comptom config is deleted
   file:
     path: "{{ dotfiles_home }}/.config/regolith/compton/config"
     state: absent
+  when: check_path_regolith_config.stat.exists
 
 - name: Link new comptom config
   file:
@@ -53,6 +59,7 @@
     dest: "{{dotfiles_home}}/.config/regolith/compton/config"
     state: link
   become: false
+  when: check_path_regolith_config.stat.exists
 
 - name: Remind me to go to sleep
   cron:
