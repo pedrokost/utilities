@@ -65,9 +65,10 @@ calibre_checksum: sha512:b808b6e576b850220c155e19f92df3f01aa3d5e6b0961cb8cebf91e
 dropbox_version: 2020.03.04
 
 rbenv:
-    env: system
+    env: user
     version: v1.0.0
     default_ruby: 2.6.5
+    
     rubies:
         - version: 2.6.5
 
