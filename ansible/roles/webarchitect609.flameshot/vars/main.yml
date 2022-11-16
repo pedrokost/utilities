@@ -1,0 +1,26 @@
+---
+__flameshot_package: "flameshot"
+__flameshot_runtime_dependencies:
+  - "libqt5dbus5"
+  - "libqt5network5"
+  - "libqt5core5a"
+  - "libqt5widgets5"
+  - "libqt5gui5"
+  - "libqt5svg5"
+  # Optional dependencies
+  - "git"
+  - "openssl"
+  - "ca-certificates"
+__flameshot_compilation_dependencies:
+  - "build-essential"
+  - "cmake"
+  - "g++"
+  - "libqt5svg5-dev"
+  - "qttools5-dev"
+  - "qttools5-dev-tools"
+  - "qt5-qmake"
+  - "qt5-default"
+__flameshot_source_dir: "/tmp/flameshot_source_code"
+__flameshot_build_dir: "{{ __flameshot_source_dir }}/build"
+__flameshot_compiled_binary: "/usr/local/bin/flameshot"
+__flameshot_installed_version: "not found"

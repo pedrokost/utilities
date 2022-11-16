@@ -11,6 +11,7 @@
     - vars/main.yml
 
   roles:
+    - role: webarchitect609.flameshot
     - role: baztian.calibre
     - role: oefenweb.dropbox
     - role: zzet.rbenv

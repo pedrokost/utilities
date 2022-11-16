@@ -74,6 +74,7 @@
   file:
     present: no
     path: ~/.gemrc
+  with_items: "{{ rbenv_users }}"
   become: yes
   become_user: "{{ item }}"
 

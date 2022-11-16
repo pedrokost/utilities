@@ -73,3 +73,5 @@ rbenv:
         - version: 2.6.5
 
 virtualenvwrapper_shell_file: "{{ lookup('env', 'HOME') }}/.zshrc"
+
+flameshot_compile: false

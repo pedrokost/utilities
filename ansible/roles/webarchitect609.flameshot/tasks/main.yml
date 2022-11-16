@@ -1,0 +1,44 @@
+---
+
+- name: "Refresh apt sources list."
+  apt:
+    update_cache: true
+    cache_valid_time: 3600
+
+- name: "Ensure runtime dependencies are installed."
+  apt:
+    name: "{{ __flameshot_runtime_dependencies }}"
+    state: "present"
+
+- name: "Install apt package."
+  apt:
+    name: "{{ __flameshot_package }}"
+    state: "present"
+  when: not flameshot_compile
+
+- block:
+
+    - name: "Remove installed apt and snap {{ __flameshot_package }} packages before checking the installed version."
+      include_tasks: remove_apt_and_snap_installations.yml
+
+    - include_tasks: check_installed_version.yml
+
+    - include_tasks: version_expansion.yml
+      when: flameshot_compile_version == "latest-stable"
+
+    - name: "Installed is {{ __flameshot_installed_version }}, compile is {{ flameshot_compile_version }}"
+      include_tasks: compile.yml
+      when: flameshot_compile_version != __flameshot_installed_version
+
+    - name: "Clear git repo clone."
+      file:
+        path: "{{ __flameshot_source_dir }}"
+        state: absent
+      changed_when: false
+
+  when: flameshot_compile
+
+- name: "Set run at startup to {{ flameshot_enable_autostart }}"
+  command: flameshot config --autostart "{{ flameshot_enable_autostart }}"
+  register: flameshot_config_autostart
+  changed_when: "flameshot_config_autostart.rc != 0"

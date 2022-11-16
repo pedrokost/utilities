@@ -1,0 +1,26 @@
+---
+
+- name: "Ensure git source repo clone will be OK."
+  file:
+    path: "{{ __flameshot_source_dir }}"
+    state: absent
+
+- name: "Clone git source repo for version expansion."
+  git:
+    repo: "{{ flameshot_source_repo }}"
+    dest: "{{ __flameshot_source_dir }}"
+    bare: true
+  changed_when: false
+
+- name: "Find latest stable release version."
+  shell: >
+    git -C "{{ __flameshot_source_dir }}" tag --list "v*" --sort "-v:refname"
+    | grep -P "^v\d+\.\d+\.\d+$"
+    | head -n 1
+  register: latest_stable
+  # just for ansible-lint
+  changed_when: false
+
+- name: "Save result to the variable."
+  set_fact:
+    flameshot_compile_version: "{{ latest_stable.stdout }}"
