@@ -70,14 +70,6 @@
   when:
     - default_gems_file is defined
 
-- name: remove old gemrc
-  file:
-    present: no
-    path: ~/.gemrc
-  with_items: "{{ rbenv_users }}"
-  become: yes
-  become_user: "{{ item }}"
-
 - name: set gemrc for select users
   copy:
     src: gemrc

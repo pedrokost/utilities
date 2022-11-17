@@ -47,7 +47,6 @@ dotfiles_files:
     - p10k.zsh
     - zshrc
     - zpreztorc
-    - gemrc
     - gitconfig
     - gitignore
 
@@ -75,3 +74,6 @@ rbenv:
 virtualenvwrapper_shell_file: "{{ lookup('env', 'HOME') }}/.zshrc"
 
 flameshot_compile: false
+
+
+virtualenvwrapper_version: 4.8.4
