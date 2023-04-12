@@ -40,7 +40,8 @@ apt_removed_packages:
     - i3xrocks-memory # Never run out
     - i3xrocks-cpu-usage # Temp is enough
 
-dotfiles_repo: git@github.com:pedrokost/dotfiles.git #/home/pedro/dotfiles/
+#dotfiles_repo: git@github.com:pedrokost/dotfiles.git #/home/pedro/dotfiles/
+dotfiles_repo: https://github.com/pedrokost/dotfiles.git #/home/pedro/dotfiles/
 dotfiles_repo_version: feature/ansible
 dotfiles_repo_local_destination: ~/.ansible/repositories/dotfiles
 dotfiles_files:
