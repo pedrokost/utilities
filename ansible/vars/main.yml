@@ -34,6 +34,12 @@ apt_installed_packages:
     - imagemagick # CLI photo editing
     - appimagelauncher # For managing AppImages
     - fonts-noto-color-emoji # Emoji fonts for Chrome
+    - htop # for CPU usage monitoring
+    - iotop # for disk IO usage monitoring
+    - i3xrocks-focused-window-name
+    - i3xrocks-rofication
+    - i3xrocks-tailscale
+    - i3xrocks-nm-vpn
 
 # TODO: ensure absent
 apt_removed_packages:
