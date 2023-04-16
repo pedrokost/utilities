@@ -63,6 +63,25 @@
   become: false
   when: check_path_regolith_v1_config.stat.exists
 
+- name: Check if path regolith 2 config exists
+  stat:
+    path: "{{dotfiles_home}}/.config/regolith2"
+  register: check_path_regolith_v2_config
+
+- name: Ensure old Xresources 2 is deleted
+  file:
+    path: "{{ dotfiles_home }}/.config/regolith2/Xresources"
+    state: absent
+  when: check_path_regolith_v2_config.stat.exists
+
+- name: Link Xresources for relogith 2
+  file:
+    src: "{{ dotfiles_repo_local_destination }}/Xresources_v2"
+    dest: "{{dotfiles_home}}/.config/regolith2/Xresources"
+    state: link
+  become: false
+  when: check_path_regolith_v2_config.stat.exists
+
 
 - name: Remind me to go to sleep
   cron:
