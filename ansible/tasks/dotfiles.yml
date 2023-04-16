@@ -43,7 +43,7 @@
 
 - name: Link Xresources
   file:
-    src: "{{ dotfiles_repo_local_destination }}/Xresources"
+    src: "{{ dotfiles_repo_local_destination }}/Xresources_v1"
     dest: "{{dotfiles_home}}/.config/regolith/Xresources"
     state: link
   become: false
