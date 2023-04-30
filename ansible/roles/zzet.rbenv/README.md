@@ -1,20 +1,16 @@
-rbenv
-========
+# rbenv
 
 Role for installing [rbenv](https://github.com/sstephenson/rbenv).
 
-Role ready status
-------------
+## Role ready status
 
 [![Build Status](https://travis-ci.org/zzet/ansible-rbenv-role.png?branch=master)](https://travis-ci.org/zzet/ansible-rbenv-role)
 
-Requirements
-------------
+## Requirements
 
 none
 
-Role Variables
---------------
+## Role Variables
 
 Default variables are:
 
@@ -71,21 +67,21 @@ Variables to control a system installation (these are not set by default):
 
 Description:
 
-- ` rbenv.env ` - Type of rbenv installation. Allows 'system' or 'user' values
-- ` rbenv.version ` - Version of rbenv to install (tag from [rbenv releases page](https://github.com/sstephenson/rbenv/releases))
-- ` rbenv.default_ruby ` - Which ruby version to be set as global rbenv ruby.
-- ` rbenv.rubies ` - Versions of ruby to install. This is an array of hashes. E.g. `[ { version: 2.4.2, env: { RUBY_CONFIGURE_OPTS="--enable-shared" } } ]`
-- ` rbenv_clean_up ` - Delete all ruby versions not listed above. Default value is `false`
-- ` rbenv_repo ` - Repository with source code of rbenv to install
-- ` rbenv_plugins ` - Array of Hashes with information about plugins to install
-- ` rbenv_root ` - Install path
-- ` rbenv_users ` - Array of usernames for multiuser install. User must be present in the system
+- `rbenv.env` - Type of rbenv installation. Allows 'system' or 'user' values
+- `rbenv.version` - Version of rbenv to install (tag from [rbenv releases page](https://github.com/sstephenson/rbenv/releases))
+- `rbenv.default_ruby` - Which ruby version to be set as global rbenv ruby.
+- `rbenv.rubies` - Versions of ruby to install. This is an array of hashes. E.g. `[ { version: 2.4.2, env: { RUBY_CONFIGURE_OPTS="--enable-shared" } } ]`
+- `rbenv_clean_up` - Delete all ruby versions not listed above. Default value is `false`
+- `rbenv_repo` - Repository with source code of rbenv to install
+- `rbenv_plugins` - Array of Hashes with information about plugins to install
+- `rbenv_root` - Install path
+- `rbenv_users` - Array of usernames for multiuser install. User must be present in the system
 - ` rbenv_extra_depends` - Array of extra system packages to install before compiling rubies
-- ` default_gems_file ` - This is Rbenv's plugin _rbenv-default-gems_. Sets the path to a default-gems file of your choice (_don't set it_ if you want to use the default file `files/default-gems`)
-- ` rbenv_owner ` - The user  owning `rbenv_root` when `rbenv.env` is `system`
-- ` rbenv_group ` - The group owning `rbenv_root` when `rbenv.env` is `system`
-- ` rbenv_tmpdir ` - A temporary directory path used for artifacts when installing rubies. Defaults to system's `$TMPDIR`
-- ` rbenv_set_vars ` - Set default vars `GEM_PATH=$GEM_PATH:$HOME/.gems` for 'user' env. Default value is `true`
+- `default_gems_file` - This is Rbenv's plugin _rbenv-default-gems_. Sets the path to a default-gems file of your choice (_don't set it_ if you want to use the default file `files/default-gems`)
+- `rbenv_owner` - The user owning `rbenv_root` when `rbenv.env` is `system`
+- `rbenv_group` - The group owning `rbenv_root` when `rbenv.env` is `system`
+- `rbenv_tmpdir` - A temporary directory path used for artifacts when installing rubies. Defaults to system's `$TMPDIR`
+- `rbenv_set_vars` - Set default vars `GEM_PATH=$GEM_PATH:$HOME/.gems` for 'user' env. Default value is `true`
 
 Example:
 
@@ -112,17 +108,14 @@ Example:
           rbenv_users:
             - user
 
-Dependencies
-------------
+## Dependencies
 
 none
 
-License
--------
+## License
 
 MIT
 
-Author Information
-------------------
+## Author Information
 
 [Andrew Kumanyaev](http://github.com/zzet)
