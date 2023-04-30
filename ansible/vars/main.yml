@@ -38,6 +38,8 @@ apt_installed_packages:
     - iotop # for disk IO usage monitoring
     - i3xrocks-focused-window-name
     - i3xrocks-rofication
+
+apt_installed_packages_22_04_only:
     - i3xrocks-tailscale
     - i3xrocks-nm-vpn
 
@@ -74,13 +76,12 @@ rbenv:
     env: user
     version: v1.0.0
     default_ruby: 2.6.5
-    
+
     rubies:
         - version: 2.6.5
 
 virtualenvwrapper_shell_file: "{{ lookup('env', 'HOME') }}/.zshrc"
 
 flameshot_compile: false
-
 
 virtualenvwrapper_version: 4.8.4

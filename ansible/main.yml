@@ -45,8 +45,6 @@
             - { key: "sync.target", val: "5" }
     # - role: lciolecki.virtualenvwrapper # FIMXE: Requires pip3. Fails otherwise.
 
-
-
   tasks:
     - name: Remove broken Ubuntu PPA for Ansible (not working on focal)
       apt_repository:
@@ -79,6 +77,12 @@
       apt:
         name: "{{ apt_installed_packages }}"
         state: latest
+
+    - name: Install apt packages for Ubuntu 22.04 only
+      apt:
+        name: "{{ apt_installed_packages_22_04_only }}"
+        state: latest
+      when: ansible_distribution_release == 'jammy'
 
     - name: Install img2pdf
       pip:
