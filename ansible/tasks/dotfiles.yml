@@ -30,17 +30,38 @@
   become: false
   with_items: "{{ dotfiles_files }}"
 
-- name: Ensure old Xresources is deleted
+- name: Check if .config/regolith folder exists
+  stat:
+    path: "{{ dotfiles_home }}/.config/regolith"
+  register: regolith_folder
+
+- name: Ensure old Xresources is deleted in regolith folder
   file:
     path: "{{ dotfiles_home }}/.config/regolith/Xresources"
     state: absent
+  when: regolith_folder.stat.exists
 
-- name: Link Xresources
+- name: Ensure old Xresources is deleted in regolith2 folder
   file:
-    src: "{{ dotfiles_repo_local_destination}}/Xresources"
-    dest: "{{dotfiles_home}}/.config/regolith/Xresources"
+    path: "{{ dotfiles_home }}/.config/regolith2/Xresources"
+    state: absent
+  when: not regolith_folder.stat.exists
+
+- name: Link Xresources_v1
+  file:
+    src: "{{ dotfiles_repo_local_destination }}/Xresources_v1"
+    dest: "{{ dotfiles_home }}/.config/regolith/Xresources"
     state: link
   become: false
+  when: regolith_folder.stat.exists
+
+- name: Link Xresources_v2
+  file:
+    src: "{{ dotfiles_repo_local_destination }}/Xresources_v2"
+    dest: "{{ dotfiles_home }}/.config/regolith2/Xresources"
+    state: link
+  become: false
+  when: not regolith_folder.stat.exists
 
 - name: Ensure old comptom config is deleted
   file:
@@ -72,11 +93,10 @@
     job: "DISPLAY=:0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus bash {{dotfiles_repo_local_destination}}/gotosleep_espeak.sh"
   become: false
 
-
 - name: Set hostsfiles
   cron:
     name: "Hostsfiles"
-    job: "DISPLAY=:0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus if [ ! -e /etc/hosts ]; then /usr/bin/notify-send -u low -t 60000 \"Host file does not exists.\"  \"Run togglehost to place it back\"; fi"
+    job: 'DISPLAY=:0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus if [ ! -e /etc/hosts ]; then /usr/bin/notify-send -u low -t 60000 "Host file does not exists."  "Run togglehost to place it back"; fi'
   become: false
 
 - name: Auto screenshoter
@@ -87,7 +107,3 @@
     weekday: "*"
     job: "DISPLAY=:0 bash {{dotfiles_repo_local_destination}}/auto-screenshoter.sh > /tmp/autoscreenshoter.log 2>&1"
   become: false
-
-
-
-
