@@ -10,10 +10,32 @@
   vars_files:
     - vars/main.yml
 
+  pre_tasks:
+    - name: Update apt cache if needed
+      apt: update_cache=yes cache_valid_time=3600
+      tags: pre_tasks
+
+    # Pip3 is required for virualenvwrapper
+    - name: Install python3-pip package
+      apt:
+        name: python3-pip
+        state: present
+      tags: pre_tasks
+
+    - name: Upgrade pip3 to latest version
+      pip:
+        name: pip
+        state: latest
+      tags: pre_tasks
+
   roles:
+    - role: webarchitect609.flameshot
     - role: baztian.calibre
     - role: oefenweb.dropbox
     - role: zzet.rbenv
+      rbenv_users:
+        - pedro
+    - role: gantsign.visual-studio-code
     - role: joplin
       users:
         - username: pedro
@@ -23,9 +45,7 @@
             - { key: "sync.target", val: "5" }
     # - role: lciolecki.virtualenvwrapper # FIMXE: Requires pip3. Fails otherwise.
 
-  pre_tasks:
-    - name: Update apt cache if needed
-      apt: update_cache=yes cache_valid_time=3600
+
 
   tasks:
     - name: Remove broken Ubuntu PPA for Ansible (not working on focal)

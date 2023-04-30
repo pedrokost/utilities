@@ -1,0 +1,24 @@
+---
+
+- name: "Check if flameshot is installed."
+  command: "which {{ __flameshot_package }}"
+  changed_when: false
+  failed_when: false
+  register: flameshot_installed
+
+- name: "Parse installed version."
+  block:
+
+    - name: "Get installed version."
+      shell: >
+       flameshot --version 2>&1
+       | grep -i "flameshot"
+       | grep -o -P "v\d+.\d+.\d+"
+      register: flameshot_installed_version
+      changed_when: false
+
+    - name: "Save result to the variable."
+      set_fact:
+        __flameshot_installed_version: "{{ flameshot_installed_version.stdout }}"
+
+  when: flameshot_installed.rc == 0

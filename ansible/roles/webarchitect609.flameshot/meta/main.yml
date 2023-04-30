@@ -1,0 +1,18 @@
+---
+dependencies: []
+galaxy_info:
+  namespace: webarchitect609
+  role_name: flameshot
+  author: Gripinskiy Sergey
+  description: Installs Flameshot or compiles it from the source code.
+  company:
+  license: BSD-3-Clause
+  min_ansible_version: 2.4
+  platforms:
+    - name: Ubuntu
+      versions:
+        - focal
+
+  galaxy_tags:
+    - flameshot
+    - screenshot

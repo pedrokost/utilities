@@ -34,20 +34,26 @@ apt_installed_packages:
     - imagemagick # CLI photo editing
     - appimagelauncher # For managing AppImages
     - fonts-noto-color-emoji # Emoji fonts for Chrome
+    - htop # for CPU usage monitoring
+    - iotop # for disk IO usage monitoring
+    - i3xrocks-focused-window-name
+    - i3xrocks-rofication
+    - i3xrocks-tailscale
+    - i3xrocks-nm-vpn
 
 # TODO: ensure absent
 apt_removed_packages:
     - i3xrocks-memory # Never run out
     - i3xrocks-cpu-usage # Temp is enough
 
-dotfiles_repo: git@github.com:pedrokost/dotfiles.git #/home/pedro/dotfiles/
+#dotfiles_repo: git@github.com:pedrokost/dotfiles.git #/home/pedro/dotfiles/
+dotfiles_repo: https://github.com/pedrokost/dotfiles.git #/home/pedro/dotfiles/
 dotfiles_repo_version: feature/ansible
 dotfiles_repo_local_destination: ~/.ansible/repositories/dotfiles
 dotfiles_files:
     - p10k.zsh
     - zshrc
     - zpreztorc
-    - gemrc
     - gitconfig
     - gitignore
 
@@ -65,10 +71,16 @@ calibre_checksum: sha512:b808b6e576b850220c155e19f92df3f01aa3d5e6b0961cb8cebf91e
 dropbox_version: 2020.03.04
 
 rbenv:
-    env: system
+    env: user
     version: v1.0.0
     default_ruby: 2.6.5
+    
     rubies:
         - version: 2.6.5
 
 virtualenvwrapper_shell_file: "{{ lookup('env', 'HOME') }}/.zshrc"
+
+flameshot_compile: false
+
+
+virtualenvwrapper_version: 4.8.4
