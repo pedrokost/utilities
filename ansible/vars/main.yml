@@ -38,6 +38,8 @@ apt_installed_packages:
     - iotop # for disk IO usage monitoring
     - i3xrocks-focused-window-name
     - i3xrocks-rofication
+    - dunst   # Notifcation daemon
+    - blueman  # Bluetooth Manager
 
 apt_installed_packages_22_04_only:
     - i3xrocks-tailscale
