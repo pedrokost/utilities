@@ -30,58 +30,126 @@
   become: false
   with_items: "{{ dotfiles_files }}"
 
-- name: Check if path regolith 1 config exists
-  stat:
-    path: "{{dotfiles_home}}/.config/regolith"
-  register: check_path_regolith_v1_config
 
-- name: Ensure old Xresources is deleted
-  file:
-    path: "{{ dotfiles_home }}/.config/regolith/Xresources"
-    state: absent
-  when: check_path_regolith_v1_config.stat.exists
+- name: Check Regolith version
+  command: cat /etc/regolith/version
+  register: regolith_version_output
+  failed_when: false
+  check_mode: false
+  changed_when: false
 
-- name: Link Xresources
-  file:
-    src: "{{ dotfiles_repo_local_destination }}/Xresources_v1"
-    dest: "{{dotfiles_home}}/.config/regolith/Xresources"
-    state: link
-  become: false
-  when: check_path_regolith_v1_config.stat.exists
+- name: Extract Regolith version number
+  set_fact:
+    regolith_version: "{{ regolith_version_output.stdout | regex_search('REGOLITH_VERSION=(.+)', '\\1') | first }}"
+  when: regolith_version_output.rc == 0
 
-- name: Ensure old compton config is deleted
-  file:
-    path: "{{ dotfiles_home }}/.config/regolith/compton/config"
-    state: absent
-  when: check_path_regolith_v1_config.stat.exists
+- name: Debug Regolith version
+  debug:
+    msg: "Detected Regolith version: {{ regolith_version }}"
+  when: regolith_version_output.rc == 0
 
-- name: Link new compton config
-  file:
-    src: "{{ dotfiles_repo_local_destination }}/compton_config"
-    dest: "{{dotfiles_home}}/.config/regolith/compton/config"
-    state: link
-  become: false
-  when: check_path_regolith_v1_config.stat.exists
+# Regolith Configuration Management
+- name: Manage Regolith configurations based on version
+  block:
+    # Regolith 1 configuration
+    - name: Check if Regolith 1 config directory exists
+      stat:
+        path: "{{ dotfiles_home }}/.config/regolith"
+      register: check_path_regolith_v1_config
 
-- name: Check if path regolith 2 config exists
-  stat:
-    path: "{{dotfiles_home}}/.config/regolith2"
-  register: check_path_regolith_v2_config
+    - name: Manage Regolith 1 Xresources
+      block:
+        - name: Remove existing Regolith 1 Xresources
+          file:
+            path: "{{ dotfiles_home }}/.config/regolith/Xresources"
+            state: absent
 
-- name: Ensure old Xresources 2 is deleted
-  file:
-    path: "{{ dotfiles_home }}/.config/regolith2/Xresources"
-    state: absent
-  when: check_path_regolith_v2_config.stat.exists
+        - name: Link Regolith 1 Xresources
+          file:
+            src: "{{ dotfiles_repo_local_destination }}/Xresources_v1"
+            dest: "{{ dotfiles_home }}/.config/regolith/Xresources"
+            state: link
+          become: false
+      when: check_path_regolith_v1_config.stat.exists and regolith_version is defined and regolith_version[0] == '1'
 
-- name: Link Xresources for relogith 2
-  file:
-    src: "{{ dotfiles_repo_local_destination }}/Xresources_v2"
-    dest: "{{dotfiles_home}}/.config/regolith2/Xresources"
-    state: link
-  become: false
-  when: check_path_regolith_v2_config.stat.exists
+    - name: Manage Regolith 1 compton config
+      block:
+        - name: Ensure compton config directory exists
+          file:
+            path: "{{ dotfiles_home }}/.config/regolith/compton"
+            state: directory
+          become: false
 
+        - name: Remove existing compton config
+          file:
+            path: "{{ dotfiles_home }}/.config/regolith/compton/config"
+            state: absent
+
+        - name: Link compton config
+          file:
+            src: "{{ dotfiles_repo_local_destination }}/compton_config"
+            dest: "{{ dotfiles_home }}/.config/regolith/compton/config"
+            state: link
+          become: false
+      when: check_path_regolith_v1_config.stat.exists and regolith_version is defined and regolith_version[0] == '1'
+
+    # Regolith 2 configuration
+    - name: Check if Regolith 2 config directory exists
+      stat:
+        path: "{{ dotfiles_home }}/.config/regolith2"
+      register: check_path_regolith_v2_config
+
+    - name: Manage Regolith 2 Xresources
+      block:
+        - name: Remove existing Regolith 2 Xresources
+          file:
+            path: "{{ dotfiles_home }}/.config/regolith2/Xresources"
+            state: absent
+
+        - name: Link Regolith 2 Xresources
+          file:
+            src: "{{ dotfiles_repo_local_destination }}/Xresources_v2"
+            dest: "{{ dotfiles_home }}/.config/regolith2/Xresources"
+            state: link
+          become: false
+      when: check_path_regolith_v2_config.stat.exists and regolith_version is defined and regolith_version[0] == '2'
+
+    # Regolith 3 configuration
+    - name: Check if Regolith 3 config directory exists
+      stat:
+        path: "{{ dotfiles_home }}/.config/regolith3"
+      register: check_path_regolith_v3_config
+
+    - name: Manage Regolith 3 configurations
+      block:
+        - name: Check if Regolith 3 Xresources exists in dotfiles
+          stat:
+            path: "{{ dotfiles_repo_local_destination }}/Xresources_v3"
+          register: regolith_v3_xresources_exists
+
+        - name: Link Regolith 3 Xresources
+          block:
+            - name: Remove existing Regolith 3 Xresources
+              file:
+                path: "{{ dotfiles_home }}/.config/regolith3/Xresources"
+                state: absent
+
+            - name: Link Regolith 3 Xresources
+              file:
+                src: "{{ dotfiles_repo_local_destination }}/Xresources_v3"
+                dest: "{{ dotfiles_home }}/.config/regolith3/Xresources"
+                state: link
+              become: false
+          when: regolith_v3_xresources_exists.stat.exists
+
+        - name: Notify about missing Regolith 3 configuration
+          debug:
+            msg: "Regolith 3 detected, but no Xresources_v3 found in dotfiles repository. Create {{ dotfiles_repo_local_destination }}/Xresources_v3 to manage Regolith 3 configurations."
+          when: not regolith_v3_xresources_exists.stat.exists
+
+      when: check_path_regolith_v3_config.stat.exists and regolith_version is defined and regolith_version[0] == '3'
+
+  when: regolith_version_output.rc == 0
 
 - name: Remind me to go to sleep
   cron:
@@ -108,14 +176,14 @@
     job: "DISPLAY=:0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus if [ ! -e /etc/hosts ]; then /usr/bin/notify-send -u low -t 60000 \"Host file does not exists.\"  \"Run togglehost to place it back\"; fi"
   become: false
 
-- name: Auto screenshoter
-  cron:
-    name: "Autoscreenshoter"
-    minute: "*/15"
-    hour: "*"
-    weekday: "*"
-    job: "DISPLAY=:0 bash {{dotfiles_repo_local_destination}}/auto-screenshoter.sh > /tmp/autoscreenshoter.log 2>&1"
-  become: false
+# - name: Auto screenshoter
+#   cron:
+#     name: "Autoscreenshoter"
+#     minute: "*/15"
+#     hour: "*"
+#     weekday: "*"
+#     job: "DISPLAY=:0 bash {{dotfiles_repo_local_destination}}/auto-screenshoter.sh > /tmp/autoscreenshoter.log 2>&1"
+#   become: false
 
 
 

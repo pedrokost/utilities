@@ -8,13 +8,13 @@ apt_installed_packages:
     - trash-cli # replacement for rm, which puts stuff in the trash
     - sublime-text # sublime text 3 installer
     - curl # Alternative to wget
-    - virtualbox # VM virtulaization software
+    #- virtualbox # VM virtulaization software
     - terminator # A better shell decorator
     - feh # To edit backgrounds
-    - vagrant # VM environment
+    #- vagrant # VM environment
     - redshift # Dim screen automatically
     - cmake # for j4-dmenu-desktop
-    - zeal # For Offline Docs
+    #- zeal # For Offline Docs
     - python3-pip # PiP: for installing packages
     - unzip # for ansible unarchive
     - anki # Anki: memory cards
@@ -24,23 +24,15 @@ apt_installed_packages:
     - libnotify-bin # installs notify-send to send notifications
     - dunst # Intrusive notifications
     - arandr # Multi-Display config that works
-    - i3xrocks-battery # Shows the battery indicator on the i3bar
-    - i3xrocks-temp # Shows CPU temp
-    - i3xrocks-volume # Shows Volume indicator
-    - i3xrocks-volume # Shows Volume indicator
-    - i3xrocks-wifi # Shows wifi name indicator
-    - regolith-compositor-none # Noop compositor instead of compton (autoremoves others)
-    - sublime-merge # Noop compositor instead of compton (autoremoves others)
+    - sublime-merge # Git client
     - imagemagick # CLI photo editing
-    - appimagelauncher # For managing AppImages
+    #- appimagelauncher # For managing AppImages
     - fonts-noto-color-emoji # Emoji fonts for Chrome
     - htop # for CPU usage monitoring
     - iotop # for disk IO usage monitoring
-    - i3xrocks-focused-window-name
-    - i3xrocks-rofication
-    - dunst # Notifcation daemon
     - blueman # Bluetooth Manager
     - libfuse2 # for app image launcher
+    - ripgrep 
 
 apt_installed_packages_22_04_only:
     - i3xrocks-tailscale
@@ -52,7 +44,8 @@ apt_removed_packages:
     - i3xrocks-cpu-usage # Temp is enough
 
 #dotfiles_repo: git@github.com:pedrokost/dotfiles.git #/home/pedro/dotfiles/
-dotfiles_repo: https://github.com/pedrokost/dotfiles.git #/home/pedro/dotfiles/
+# dotfiles_repo: https://github.com/pedrokost/dotfiles.git #/home/pedro/dotfiles/
+dotfiles_repo: git@github.com:pedrokost/dotfiles.git
 dotfiles_repo_version: feature/ansible
 dotfiles_repo_local_destination: ~/.ansible/repositories/dotfiles
 dotfiles_files:
@@ -88,3 +81,33 @@ virtualenvwrapper_shell_file: "{{ lookup('env', 'HOME') }}/.zshrc"
 flameshot_compile: false
 
 virtualenvwrapper_version: 4.8.4
+
+# Regolith 1 & 2 packages (i3-based)
+regolith_v1_v2_packages:
+  - i3xrocks-battery      # Battery indicator
+  - i3xrocks-temp         # CPU temperature
+  - i3xrocks-volume       # Volume indicator
+  - i3xrocks-wifi         # WiFi indicator
+  - regolith-compositor-none  # No compositor option
+  - i3xrocks-focused-window-name
+  - i3xrocks-rofication
+
+# Regolith 3 packages for X11 sessions (backward compatible)
+regolith_v3_x11_packages:
+  - i3xrocks-battery      # Battery indicator (still works in R3 X11)
+  - i3xrocks-temp         # CPU temperature (still works in R3 X11)
+  - i3xrocks-volume       # Volume indicator (still works in R3 X11)
+  - i3xrocks-wifi         # WiFi indicator (still works in R3 X11)
+  - regolith-compositor-none  # No compositor option
+  - i3xrocks-net-traffic
+  - i3xrocks-rofication
+  - i3xrocks-weather
+
+# Regolith 3 packages for Wayland sessions (modern approach)
+regolith_v3_wayland_packages:
+  - i3status-rs           # Modern status bar for Wayland
+  - regolith-sway-i3status-rs  # Sway integration for i3status-rs
+
+# Regolith 3 Configuration
+regolith3_install_packages: false
+regolith3_required_packages: []
