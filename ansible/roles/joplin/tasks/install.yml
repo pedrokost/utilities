@@ -63,19 +63,47 @@
     # is being used and just template out this icon...
     ############################################################################
     #####
-    # (cd $TMPDIR && ~/.joplin/Joplin.AppImage --appimage-extract joplin.desktop &> /dev/null)
     - name: install| extract the AppImage to find buildid [{{ user.username }}]
-      shell: cd /tmp && ~/.joplin/Joplin.AppImage --appimage-extract @joplinapp-desktop.desktop &> /dev/null
-    #####
-    # APPIMAGE_VERSION=$(grep "^X-AppImage-BuildId=" $TMPDIR/squashfs-root/@joplinapp-desktop.desktop | head -n 1 | cut -d " " -f 1)
+      shell: cd /home/pedro/tmp && ~/.joplin/Joplin.AppImage --appimage-extract
+      register: extraction_output
+
+    - name: install| check extraction output for errors
+      debug:
+        msg: "{{ extraction_output.stdout }} {{ extraction_output.stderr }}"
+      when: extraction_output.failed
+
+    - name: install| wait for extraction to complete and ensure directory exists
+      wait_for:
+        path: /home/pedro/tmp/squashfs-root
+        timeout: 30
+
+    - name: install| list files in extraction directory
+      shell: ls /home/pedro/tmp/squashfs-root
+      register: extracted_files
+
+    - name: install| check if the desktop file exists
+      debug:
+        msg: "{{ extracted_files.stdout }}"
+      when: extracted_files.stdout is not search("joplinapp-desktop.desktop")
+
     - name: install| capture the BuildId from the AppImage itself [{{ user.username }}]
-      command: awk '/^X-AppImage-BuildId=/ {print $1;exit;}' /tmp/squashfs-root/@joplinapp-desktop.desktop
+      command: awk '/^X-AppImage-BuildId=/ {print $1;exit;}' /home/pedro/tmp/squashfs-root/@joplinapp-desktop.desktop
       register: BUILDID_line
+      when: extracted_files.stdout is search("joplinapp-desktop.desktop")
+
+    # # (cd $TMPDIR && ~/.joplin/Joplin.AppImage --appimage-extract joplin.desktop &> /dev/null)
+    # - name: install| extract the AppImage to find buildid [{{ user.username }}]
+    #   shell: cd /home/pedro/tmp && ~/.joplin/Joplin.AppImage --appimage-extract @joplinapp-desktop.desktop &> /dev/null
+    # #####
+    # # APPIMAGE_VERSION=$(grep "^X-AppImage-BuildId=" $TMPDIR/squashfs-root/@joplinapp-desktop.desktop | head -n 1 | cut -d " " -f 1)
+    # - name: install| capture the BuildId from the AppImage itself [{{ user.username }}]
+    #   command: awk '/^X-AppImage-BuildId=/ {print $1;exit;}' /home/pedro/tmp/squashfs-root/@joplinapp-desktop.desktop
+    #   register: BUILDID_line
     #####
     # rm -rf $TMPDIR/squashfs-root
     - name: install| remove the extracted files [{{ user.username }}]
       file:
-        path: /tmp/squashfs-root
+        path: /home/pedro/tmp/squashfs-root
         state: absent
     #####
     # mkdir -p ~/.local/share/applications

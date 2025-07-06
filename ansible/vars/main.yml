@@ -40,6 +40,7 @@ apt_installed_packages:
     - i3xrocks-rofication
     - dunst # Notifcation daemon
     - blueman # Bluetooth Manager
+    - libfuse2 # for app image launcher
 
 apt_installed_packages_22_04_only:
     - i3xrocks-tailscale
@@ -65,11 +66,11 @@ dotfiles_repo_accept_hostkey: false
 dotfiles_home: "~"
 
 ppas:
-    - ppa:appimagelauncher-team/stable
+    # - ppa:appimagelauncher-team/stable  # Commented out - not supported on Ubuntu 24.04 (Noble)
 
-calibre_version: 7.0.0
+calibre_version: 8.4.0
 # Get checksum from https://calibre-ebook.com/signatures/ from -x86_64.txz.sha512
-calibre_checksum: sha512:58b686197e52ff3a74e5d30c5e28c110a87b291aacdaa928fc89de060dfd83f5107b0bc0b412124b6c17f73b860b85ea9ffc03aa50cdf34256784a4d23d159c3
+calibre_checksum: sha512:dc5f33103a4d8c08bb6c6a28e9cb826097c0f2276a280820f030a3716422d55977c63d8bf2a64f41799461fdbe402234481ceb0f77e7130c173caa66a7e91824
 
 # dropbox_version: "99.3.496"
 dropbox_version: 2020.03.04
