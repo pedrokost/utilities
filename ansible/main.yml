@@ -15,19 +15,7 @@
       apt: update_cache=yes cache_valid_time=3600
       tags: pre_tasks
 
-    # Pip3 is required for virualenvwrapper
-    - name: Install python3-pip package
-      apt:
-        name: python3-pip
-        state: present
-      tags: pre_tasks
-
-    - name: Upgrade pip3 to latest version
-      pip:
-        name: pip
-        state: latest
-      tags: pre_tasks
-
+    
   roles:
     - role: webarchitect609.flameshot
     - role: baztian.calibre
@@ -108,23 +96,101 @@
         state: latest
       when: ansible_distribution_release == 'jammy'
 
-    - name: Install img2pdf
-      pip:
-        name: img2pdf
+    #- name: Install img2pdf
+    #  pip:
+    #    name: img2pdf
 
-    - name: Install Youtube-DL
-      pip:
-        name: youtube_dl
-
-    - name: Install jrnl
-      pip:
-        name: jrnl
+    # - name: Install Youtube-DL
+    #   pip:
+    #     name: youtube_dl
 
     - include_tasks:
         file: tasks/zsh.yml
 
-    - include_tasks:
-        file: tasks/mullvad.yml
+    #- include_tasks:
+    #    file: tasks/mullvad.yml
+
+    # Regolith Version-Specific Package Management
+    - name: Check Regolith version for package management
+      command: cat /etc/regolith/version
+      register: regolith_version_output
+      failed_when: false
+      check_mode: false
+      changed_when: false
+
+    - name: Extract Regolith version number for package management
+      set_fact:
+        regolith_version: "{{ regolith_version_output.stdout | regex_search('REGOLITH_VERSION=(.+)', '\\1') | first }}"
+      when: regolith_version_output.rc == 0
+
+    - name: Install Regolith version-specific packages
+      block:
+        # Check for config directories
+        - name: Check if Regolith 1 config directory exists
+          stat:
+            path: "{{ ansible_env.HOME }}/.config/regolith"
+          register: check_path_regolith_v1_config
+
+        - name: Check if Regolith 2 config directory exists
+          stat:
+            path: "{{ ansible_env.HOME }}/.config/regolith2"
+          register: check_path_regolith_v2_config
+
+        - name: Check if Regolith 3 config directory exists
+          stat:
+            path: "{{ ansible_env.HOME }}/.config/regolith3"
+          register: check_path_regolith_v3_config
+
+        # Install version-specific packages
+        - name: Install Regolith 1 packages
+          apt:
+            name: "{{ regolith_v1_v2_packages }}"
+            state: present
+          when: 
+            - check_path_regolith_v1_config.stat.exists
+            - regolith_version is defined 
+            - regolith_version[0] == '1'
+            - regolith_manage_packages | default(true)
+
+        - name: Install Regolith 2 packages
+          apt:
+            name: "{{ regolith_v1_v2_packages }}"
+            state: present
+          when: 
+            - check_path_regolith_v2_config.stat.exists
+            - regolith_version is defined 
+            - regolith_version[0] == '2'
+
+        # Regolith 3 package management
+        - name: Detect session type for Regolith 3 package management
+          set_fact:
+            regolith3_session_type: "{{ ansible_env.XDG_SESSION_TYPE | default('x11') }}"
+          when: 
+            - check_path_regolith_v3_config.stat.exists
+            - regolith_version is defined 
+            - regolith_version[0] == '3'
+
+        - name: Install Regolith 3 X11 packages
+          apt:
+            name: "{{ regolith_v3_x11_packages }}"
+            state: present
+          when: 
+            - check_path_regolith_v3_config.stat.exists
+            - regolith_version is defined 
+            - regolith_version[0] == '3'
+            - regolith3_session_type == 'x11'
+
+        - name: Install Regolith 3 Wayland packages
+          apt:
+            name: "{{ regolith_v3_wayland_packages }}"
+            state: present
+          when: 
+            - check_path_regolith_v3_config.stat.exists
+            - regolith_version is defined 
+            - regolith_version[0] == '3'
+            - regolith3_session_type == 'wayland'
+
+      when: regolith_version_output.rc == 0
 
     - include_tasks:
         file: tasks/dotfiles.yml
