@@ -4,6 +4,9 @@
 - src: https://github.com/thisdwhitley/ansible-role-joplin.git
   scm: git
   name: joplin
+- src: https://github.com/baztian/ansible-joplin.git
+  scm: git
+  name: baztian.joplin
 - src: oefenweb.dropbox
 - src: zzet.rbenv
 - src: lciolecki.virtualenvwrapper

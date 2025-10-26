@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+      - main
+  schedule:
+    - cron: "0 7 * * 2"
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: yaml-lint
+        uses: ibiqlik/action-yamllint@v3
+      - name: Run ansible-lint
+        uses: ansible/ansible-lint@main
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        distro:
+          - ubuntu2004
+          - ubuntu1804
+          - ubuntu1604
+          - debian10
+          - debian9
+    steps:
+      - uses: actions/checkout@v2
+      - name: molecule
+        uses: robertdebock/molecule-action@2.6.8
+        env:
+          MOLECULE_DISTRO: ${{ matrix.distro }}

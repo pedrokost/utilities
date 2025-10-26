@@ -23,14 +23,15 @@
     - role: zzet.rbenv
       rbenv_users:
         - pedro
-    # - role: gantsign.visual-studio-code
-    #- role: joplin
-    #  users:
+    # - role: joplin
+    #   users:
     #    - username: pedro
     #      settings:
     #        - { key: "sidebarVisibility", val: "1" }
     #        - { key: "dateFormat", val: "YYYY-MM-DD" }
     #        - { key: "sync.target", val: "5" }
+
+    - role: baztian.joplin
     # - role: lciolecki.virtualenvwrapper # FIMXE: Requires pip3. Fails otherwise.
 
   tasks:

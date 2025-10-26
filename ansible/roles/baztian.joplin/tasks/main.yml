@@ -1,0 +1,42 @@
+---
+- name: Check if Joplin version is already installed.
+  stat:
+    path: /opt/Joplin-{{ joplin_version }}.AppImage
+  register: joplin_bin
+- name: Download Joplin {{ joplin_version }}
+  get_url:
+    url: https://github.com/laurent22/joplin/releases/download/v{{ joplin_version }}/Joplin-{{ joplin_version }}.AppImage
+    # checksum: "sha256:{{ joplin_sha256 }}"
+    dest: /opt/Joplin-{{ joplin_version }}.AppImage
+    mode: "0755"
+  when: not joplin_bin.stat.exists
+- name: Create icon directory
+  file:
+    path: /usr/local/share/icons/hicolor/512x512/apps
+    state: directory
+    mode: 0755
+- name: Symlink default Joplin version
+  file:
+    src: Joplin-{{ joplin_version }}.AppImage
+    dest: /opt/Joplin.AppImage
+    state: link
+- name: Check if Joplin icon already installed
+  stat:
+    path: /usr/local/share/icons/hicolor/512x512/apps/joplin.png
+  register: joplin_icon
+- name: Download Joplin icon
+  get_url:
+    url: https://joplinapp.org/images/Icon512.png
+    dest: /usr/local/share/icons/hicolor/512x512/apps/joplin.png
+    mode: 0644
+  when: not joplin_icon.stat.exists
+- name: Create launcher directory
+  file:
+    path: /usr/local/share/applications
+    state: directory
+    mode: 0755
+- name: Copy Joplin desktop launcher
+  copy:
+    src: joplin.desktop
+    dest: /usr/local/share/applications/joplin.desktop
+    mode: 0644

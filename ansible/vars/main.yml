@@ -68,6 +68,12 @@ calibre_checksum: sha512:dc5f33103a4d8c08bb6c6a28e9cb826097c0f2276a280820f030a37
 # dropbox_version: "99.3.496"
 dropbox_version: 2020.03.04
 
+# https://github.com/laurent22/joplin/releases
+joplin_version: 3.5.5
+joplin_sha256: 22ff90b3846e2d2c9b2722d325fffa84775e362af9a4567a9fa8672e27c5a5bd
+
+
+
 rbenv:
     env: user
     version: v1.0.0
